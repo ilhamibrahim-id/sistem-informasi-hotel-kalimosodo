@@ -1,4 +1,4 @@
-name: siakad
+name: hotel
 
 on:
   push:
@@ -25,10 +25,10 @@ jobs:
         run: |
           docker build -f Docker/dockerfile/app.Dockerfile -t app .
           docker build -f Docker/dockerfile/web_server.Dockerfile -t web_server .
-          docker tag app ${{ secrets.DOCKERHUB_USERNAME}}/siakad
-          docker tag web_server ${{ secrets.DOCKERHUB_USERNAME}}/siakad-web_server
-          docker push ${{ secrets.DOCKERHUB_USERNAME}}/siakad
-          docker push ${{ secrets.DOCKERHUB_USERNAME}}/siakad-web_server
+          docker tag app ${{ secrets.DOCKERHUB_USERNAME}}/hotel
+          docker tag web_server ${{ secrets.DOCKERHUB_USERNAME}}/hotel-web_server
+          docker push ${{ secrets.DOCKERHUB_USERNAME}}/hotel
+          docker push ${{ secrets.DOCKERHUB_USERNAME}}/hotel-web_server
       - name: "Write config"
         run: |
           mkdir ~/.oci
@@ -92,8 +92,8 @@ jobs:
           username: ubuntu
           key: ${{secrets.OCI_INSTANCE_KEY}}
           script: |
-            sudo docker pull 1941720180/siakad
-            sudo docker pull 1941720180/siakad-web_server
+            sudo docker pull 1941720180/hotel
+            sudo docker pull 1941720180/hotel-web_server
             sudo docker-compose up -d
             sudo docker exec app /bin/bash -c "php artisan key:generate"
             sudo docker exec app /bin/bash -c "echo 'DB_CONNECTION=${{ secrets.DB_CONNECTION }}' >> .env"
